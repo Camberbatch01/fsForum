@@ -15,20 +15,14 @@ class Login extends React.Component {
       axios.get('http://localhost:3001/')
       .then(response => console.log(response.data));
     }
-    updateEntry = (e) => {
-      const value = e.target.value;
-      const target = e.target.id;
-      this.setState({[target]: value});
-    }
     render(){
       return (
         <div className="App">
           <form>
-            <h1>Login</h1>
-            <input type="text" id="username" placeholder="Username..." required onChange={this.updateEntry} />
-            <input type="password" id="password" placeholder="Password..." required onChange={this.updateEntry} />
-            <button id="loginBtn">login</button>
-            <Link to='/create'>Create New?</Link>
+            <h1>Sign in with</h1>
+            <a className="login Google" href="http://localhost:3001/auth/google">Google+</a>
+            <a className="login Github" href="http://localhost:3001/auth/github">Github</a>
+            <a className="login Facebook" href="http://localhost:3001/auth/facebook">Facebook</a>
           </form> 
         </div>
       );
