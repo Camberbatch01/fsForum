@@ -2,22 +2,34 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require("cors");
-const authR = require("./routes/authRoutes")
+const authR = require("./routes/authRoutes");
+const userRoutes = require('./routes/userRoutes');
 const passportSetup = require('./config/passportSetup');
+const passport = require('passport');
 const keys = require('./config/keys');
+const cookieSession = require('cookie-session');
 
 const app = express();
 
 //connect to mongo
 mongoose.connect(keys.mongodb.dbURI, ()=>{
-    console.log('conected to mongodb');
+    console.log('connected to mongodb');
 });
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieSession({
+    maxAge: 24*60*60*1000,
+    keys: [keys.session.cookieKey]
+}));
+
+//initialise passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/auth', authR);
+app.use('/user', userRoutes);
 
 app.get('/', (req, res, next) => {
     res.send("Connected and working");

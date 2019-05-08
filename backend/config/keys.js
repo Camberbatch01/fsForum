@@ -7,5 +7,8 @@ module.exports = {
     },
     mongodb: {
         dbURI: "mongodb://cam:test01@ds151586.mlab.com:51586/fs-forum"
+    },
+    session: {
+        cookieKey: 'andsoitbegins'
     }
 }
