@@ -6,6 +6,7 @@ class Dashboard extends React.Component {
       return (
         <div className="App">
             hi
+            <a href="http://localhost:3001/auth/logout" onClick={() => window.localStorage.removeItem('token')}>log out</a>
         </div>
       );
     }
