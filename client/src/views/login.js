@@ -20,9 +20,15 @@ class Login extends React.Component {
         <div className="App">
           <form>
             <h1>Sign in with</h1>
-            <a className="login Google" href="http://localhost:3001/auth/google">Google+</a>
-            <a className="login Github" href="http://localhost:3001/auth/github">Github</a>
-            <a className="login Facebook" href="http://localhost:3001/auth/facebook">Facebook</a>
+            <div>
+              <input type="text" className="local username" placeholder="username..."/>
+              <input type="text" className="local password" placeholder="password..."/>
+              <button id="btnSubmit">Login</button>  
+            </div>
+            <div>
+              <a className="login Google" href="http://localhost:3001/auth/google">Google+</a>
+              <a className="login Github" href="http://localhost:3001/auth/github">Github</a>
+            </div>
           </form> 
         </div>
       );
