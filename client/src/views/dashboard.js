@@ -1,12 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import auth from '../components/auth';
 
 class Dashboard extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      userID: '',
+      userData: []
+    }
+  }
+  componentDidMount = () => {   //callback of setState run axios for userdata using userID, set data state and render page
+    axios.get('http://localhost:3001/user/dashboard', {withCredentials: true}).then(res => this.setState({userID: res.data}));
+  }
     render(){
       return (
         <div className="App">
-            hi
-            <a href="http://localhost:3001/auth/logout" onClick={() => window.localStorage.removeItem('token')}>log out</a>
+            <a href="http://localhost:3001/auth/logout">log out</a>
         </div>
       );
     }

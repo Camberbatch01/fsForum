@@ -16,7 +16,7 @@ mongoose.connect(keys.mongodb.dbURI, ()=>{
     console.log('connected to mongodb');
 });
 
-app.use(cors());
+app.use(cors({origin: 'http://localhost:3000', credentials: true}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieSession({

@@ -1,15 +1,20 @@
 const router = require('express').Router();
 
 const authCheck = (req, res, next) => {
-    if (!req.user){
-        res.redirect('http://localhost:3000');
+    console.log(req.isAuthenticated())
+    if (req.isAuthenticated()){
+        return next()
     } else {
-        next();
+        res.status(401).send('Unauthorized')
     }
 }
 
+router.get('/checkAuth', authCheck, (req, res) => {
+    res.status(200).send('Access Granted');
+})
+
 router.get('/dashboard', authCheck, (req, res) => {
-    res.send('you are logged in '+ req.user.username);
+    res.send(req.user);
 });
 
 module.exports = router;
