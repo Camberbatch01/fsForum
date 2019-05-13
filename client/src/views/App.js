@@ -7,7 +7,7 @@ import auth from '../components/auth';
 class App extends React.Component {
   render(){
     return (
-      <div className="App">
+      <div>
         <Switch>
           <Route exact path="/" component={login}/>
           <Route path ="/user/dashboard" component={auth(dashboard)}/>

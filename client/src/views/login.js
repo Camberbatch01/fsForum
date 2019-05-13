@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import '../styles/login.scss';
 import axios from 'axios';
 import { Switch, Route, Link } from 'react-router-dom';
 
@@ -18,14 +18,14 @@ class Login extends React.Component {
     render(){
       return (
         <div className="App">
-          <form>
+          <form className='signIn'>
             <h1>Sign in with</h1>
-            <div>
+            <div className="loginContainer">
               <input type="text" className="local username" placeholder="username..."/>
               <input type="text" className="local password" placeholder="password..."/>
               <button id="btnSubmit">Login</button>  
             </div>
-            <div>
+            <div className="trdPartyAuth">
               <a className="login Google" href="http://localhost:3001/auth/google">Google+</a>
               <a className="login Github" href="http://localhost:3001/auth/github">Github</a>
             </div>
