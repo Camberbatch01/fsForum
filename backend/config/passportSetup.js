@@ -2,6 +2,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const GithubStrategy = require('passport-github');
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
 const keys = require('./keys');
 const User = require('../models/userModel');
 
@@ -19,9 +20,15 @@ passport.use(new LocalStrategy(
     function(username, password, done) {
       User.findOne({ username: username }, function (err, user) {
         if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        if (!user.verifyPassword(password)) { return done(null, false); }
-        return done(null, user);
+        if (!user) { return done(null, false, {message: 'Username does not exist'}); }
+        bcrypt.compare(password, user.password, function(err, isMatch){
+            if (err) throw err;
+            if (isMatch){
+                return done(null, user);
+            } else {
+                return done(null, false, {message: 'Incorrect username or password'});
+            }
+        });
       });
     }
   ));
