@@ -17,10 +17,24 @@ class Login extends React.Component {
         username: '',
         password: ''
       }
+      this.changeDetails = this.changeDetails.bind(this);
+      this.loginLocal = this.loginLocal.bind(this);
     }
     componentDidMount = () => {
       axios.get('http://localhost:3001/')
       .then(response => console.log(response.data));
+    }
+    changeDetails = (details) => {
+      const key = details.target.name;
+      const value = details.target.value;
+      this.setState({[key]: value});
+    }
+    loginLocal = (e) => {
+      e.preventDefault();
+      axios.post('http://localhost:3001/auth/local', {
+        username: this.state.username,
+        password: this.state.password
+      });
     }
     render(){
       return (
@@ -28,9 +42,9 @@ class Login extends React.Component {
           <form className='signIn'>
             <h1>Sign in with</h1>
             <div className="loginContainer">
-              <input type="text" className="local username" placeholder="username..."/>
-              <input type="password" className="local password" placeholder="password..."/>
-              <button id="btnSubmit">Login</button>
+              <input type="text" className="local username" name="username" placeholder="username..." onChange={this.changeDetails}/>
+              <input type="password" className="local password" name="password" placeholder="password..." onChange={this.changeDetails}/>
+              <button id="btnSubmit" onClick={this.loginLocal}>Login</button>
               <a id="createNew" href="/create">Sign Up?</a>
             </div>
             <div className="trdPartyAuth">
