@@ -22,7 +22,7 @@ class CreateUser extends React.Component {
             displayName: this.state.displayName,
             username: this.state.username,
             password: this.state.password
-        })
+        }).then(res => console.log(res.data));
     }
     render(){
         return (

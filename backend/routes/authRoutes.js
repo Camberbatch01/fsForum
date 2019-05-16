@@ -8,11 +8,12 @@ router.get('/logout', (req, res) => {
     res.redirect('http://localhost:3000');
 });
 
-router.post('/local', (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: 'http://localhost:3000/user/dashboard',
-        failureRedirect: 'http://localhost:3000/',
-    })(req, res, next);
+router.post('/local', passport.authenticate('local'), (req, res) => {
+    if (req.user){
+        res.redirect('http://localhost:3000/user/dashboard');
+    } else {
+        res.redirect('http://localhost:3000/');
+    }
 });
 
 router.post('/create', (req, res) => {
@@ -38,8 +39,8 @@ router.post('/create', (req, res) => {
                     if (err) throw err;
                     newUser.password = hash;
                     newUser.save()
-                    .then(data => console.log(data))
-                    .catch(err => console.log(err))
+                    .then(() => res.send('Account created'))
+                    .catch(err => res.send('Error occured' + err));
                 }))
             }
         })
