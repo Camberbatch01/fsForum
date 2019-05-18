@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const User = require('../models/userModel');
+const Data = require('../models/dataModel');
 const bcrypt = require('bcryptjs');
 
 router.get('/logout', (req, res) => {
@@ -8,13 +9,13 @@ router.get('/logout', (req, res) => {
     res.redirect('http://localhost:3000');
 });
 
-router.post('/local', passport.authenticate('local'), (req, res) => {
-    if (req.user){
+router.post('/login', 
+    passport.authenticate('local', { failureRedirect: 'http://localhost:3000' }),
+    function(req, res) {
         res.redirect('http://localhost:3000/user/dashboard');
-    } else {
-        res.redirect('http://localhost:3000/');
     }
-});
+);
+
 
 router.post('/create', (req, res) => {
     const {displayName, username, password} = req.body;
@@ -39,13 +40,22 @@ router.post('/create', (req, res) => {
                     if (err) throw err;
                     newUser.password = hash;
                     newUser.save()
-                    .then(() => res.send('Account created'))
-                    .catch(err => res.send('Error occured' + err));
+                    .then((user) => req.login(user, function(err){
+                        if (err) return next(err);
+                        new Data({
+                            userID: user.id,
+                            tags: null,
+                            posts: null,
+                            following: null
+                        }).save().then(() => {
+                            res.redirect('http://localhost:3000/user/dashboard');
+                        }).catch(err => console.log(err));
+                    }))
+                    .catch(err => res.redirect('http://localhost:3000'));
                 }))
             }
         })
     }
-    
 })
 
 router.get('/google', passport.authenticate('google', {

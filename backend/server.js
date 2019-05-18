@@ -8,6 +8,7 @@ const passportSetup = require('./config/passportSetup');
 const passport = require('passport');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
+const session = require('express-session');
 
 const app = express();
 
@@ -19,9 +20,11 @@ mongoose.connect(keys.mongodb.dbURI, ()=>{
 app.use(cors({origin: 'http://localhost:3000', credentials: true}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cookieSession({
-    maxAge: 24*60*60*1000,
-    keys: [keys.session.cookieKey]
+app.use(session({
+    secret: keys.session.cookieKey,
+    cookie: {maxAge: 100000}, 
+    resave: false, 
+    saveUninitialized: false
 }));
 
 //initialise passport

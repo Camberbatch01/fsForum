@@ -5,25 +5,17 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const keys = require('./keys');
 const User = require('../models/userModel');
-
-passport.serializeUser((user, done)=>{
-    done(null, user.id);
-});
-
-passport.deserializeUser((id, done)=> {
-    User.findById(id).then((user)=> {
-        done(null, user.id);    
-    });
-});
+const Data = require('../models/dataModel');
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
       User.findOne({ username: username }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, {message: 'Username does not exist'}); }
+        if (err)  return done(err); 
+        if (!user)  return done(null, false, {message: 'Username does not exist'}); 
         bcrypt.compare(password, user.password, function(err, isMatch){
             if (err) throw err;
             if (isMatch){
+                console.log('user found')
                 return done(null, user);
             } else {
                 return done(null, false, {message: 'Incorrect username or password'});
@@ -49,7 +41,14 @@ passport.use(new GoogleStrategy({
                 googleID: profile.id,
                 githubID: null
             }).save().then((newUser)=> {
-                done(null, newUser);
+                new Data({
+                    userID: newUser.id,
+                    tags: null,
+                    posts: null,
+                    following: null
+                }).save().then(() => {
+                    done(null, newUser);    
+                })
             })
         }
     });
@@ -71,8 +70,25 @@ passport.use(new GithubStrategy({
                 googleID: null,
                 githubID: profile.id
             }).save().then((newUser)=> {
-                done(null, newUser);
+                new Data({
+                    userID: newUser.id,
+                    tags: null,
+                    posts: null,
+                    following: null
+                }).save().then(() => {
+                    done(null, newUser);    
+                })
             })
         }
     });
 }));
+
+passport.serializeUser((user, done)=>{
+    return done(null, user.id);
+});
+
+passport.deserializeUser((id, done)=> {
+    User.findById(id).then((user)=> {
+        return done(null, user.id);    
+    });
+});

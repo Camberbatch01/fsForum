@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const authCheck = (req, res, next) => {
-    console.log(req.isAuthenticated())
+    console.log('auth ' + req.isAuthenticated());
     if (req.isAuthenticated()){
         return next()
     } else {

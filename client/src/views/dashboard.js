@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import auth from '../components/auth';
 
 class Dashboard extends React.Component {
   constructor(){
@@ -15,7 +14,7 @@ class Dashboard extends React.Component {
   }
     render(){
       return (
-        <div className="App">
+        <div>
             <a href="http://localhost:3001/auth/logout">log out</a>
         </div>
       );
