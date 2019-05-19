@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Header from '../components/header';
 
 class Dashboard extends React.Component {
   constructor(){
@@ -15,7 +16,7 @@ class Dashboard extends React.Component {
     render(){
       return (
         <div>
-            <a href="http://localhost:3001/auth/logout">log out</a>
+            <Header/>
         </div>
       );
     }
