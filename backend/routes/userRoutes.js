@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const User = require('../models/userModel');
+const Data = require('../models/dataModel');
 
 const authCheck = (req, res, next) => {
     console.log('auth ' + req.isAuthenticated());
@@ -14,7 +16,19 @@ router.get('/checkAuth', authCheck, (req, res) => {
 })
 
 router.get('/dashboard', authCheck, (req, res) => {
-    res.send(req.user);
+    Data.findOne({userID: req.user})
+    .then(user => {
+        res.send(user);
+    })
+});
+
+router.get('/profile', authCheck, (req, res) => {
+    const info = {};
+    User.findById(req.user).then(user => info["personal"] = user.name)
+    .then(() => {
+        Data.findOne({userID: req.user}).then(user => info["detail"] = user)
+        .then(() => res.send(info));   
+    })
 });
 
 module.exports = router;
