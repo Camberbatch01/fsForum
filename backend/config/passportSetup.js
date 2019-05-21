@@ -36,6 +36,7 @@ passport.use(new GoogleStrategy({
         } else {
             new User({
                 name: profile.displayName,
+                displayImage: profile._json.picture,
                 username: null,
                 password: null,
                 googleID: profile.id,
@@ -65,6 +66,7 @@ passport.use(new GithubStrategy({
         } else {
             new User({
                 name: profile.displayName,
+                displayImage: profile._json.avatar_url,
                 username: null,
                 password: null,
                 googleID: null,

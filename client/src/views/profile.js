@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Header from '../components/header';
 import postsView from '../components/posts';
+import '../styles/profile.scss';
 
 class Dashboard extends React.Component {
   constructor(){
@@ -19,25 +20,29 @@ class Dashboard extends React.Component {
     }));
   }
     render(){
-        let displayName;
-        let posts;
-        console.log([this.state.detailInfo])
+        let display;
+        let posts = [];
+        let profImg = '/default-user.png';
+
         if (this.state.personalInfo === null || this.state.detailInfo === null){
-            console.log('correct ran')
-            displayName = "Name Unavailable";
-            posts = [];
+            display = "Name Unavailable";
         } else {
-            displayName = this.state.personalInfo;
+            display = this.state.personalInfo;
             posts = this.state.detailInfo.posts;
         }
+        
+        if (display.displayImage){
+            profImg = display.displayImage;
+        } 
 
       return (
         <div>
             <Header/>
             <div id="profileBanner">
-                <h2>{displayName}</h2>
+              <img id="profImg" src={profImg}/>
+              <h1>{display.name}</h1>
             </div>
-            {postsView(posts, displayName)}
+            {postsView(posts, display)}
         </div>
       );
     }

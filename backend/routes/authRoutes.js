@@ -30,6 +30,7 @@ router.post('/create', (req, res) => {
             } else {
                 const newUser = new User({
                     name: displayName,
+                    displayImage: null,
                     username: username,
                     password: password,
                     googleID: null,

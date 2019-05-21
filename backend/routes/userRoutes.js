@@ -24,7 +24,7 @@ router.get('/dashboard', authCheck, (req, res) => {
 
 router.get('/profile', authCheck, (req, res) => {
     const info = {};
-    User.findById(req.user).then(user => info["personal"] = user.name)
+    User.findById(req.user).then(user => info["personal"] = user)
     .then(() => {
         Data.findOne({userID: req.user}).then(user => info["detail"] = user)
         .then(() => res.send(info));   
