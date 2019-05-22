@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(session({
     secret: keys.session.cookieKey,
-    cookie: {maxAge: 100000}, 
+    cookie: {maxAge: 1000*60*60*24}, 
     resave: false, 
     saveUninitialized: false
 }));

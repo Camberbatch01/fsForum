@@ -1,6 +1,6 @@
 import React from 'react';
 
-const postsView = (posts, author) => {
+const postsView = (posts) => {
     if (!posts || posts.length === 0){
         return <h2>No posts currently available to see</h2>
     } else {
@@ -9,7 +9,7 @@ const postsView = (posts, author) => {
             return (
                 <div className="postContainer">
                     <a href={`posts/${post.postID}`}>{post.title}</a>
-                    <p>{author.name}</p>
+                    <p>{post.author}</p>
                     <p>{post.date}</p>
                     <p>{post.rating}</p>
                     <p>{post.comments.length}</p>

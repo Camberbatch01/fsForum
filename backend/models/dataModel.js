@@ -9,6 +9,7 @@ const dataSchema = new Schema({
     posts: [{ 
         post: {
             postID: String,
+            author: String,
             title: String,
             tags: [{
                 tag: String

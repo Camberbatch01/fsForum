@@ -16,9 +16,17 @@ router.get('/checkAuth', authCheck, (req, res) => {
 })
 
 router.get('/dashboard', authCheck, (req, res) => {
-    Data.findOne({userID: req.user})
+    Data.find({}, {posts: 1, _id: 0})
     .then(user => {
-        res.send(user);
+        const postData = [];
+        user.forEach(userPosts => {
+            if (userPosts.posts) {
+                (userPosts.posts).forEach(userPost => {
+                    postData.push(userPost.post);
+                });
+            }
+        })
+        res.send(postData);
     })
 });
 

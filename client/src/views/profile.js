@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
               <img id="profImg" src={profImg}/>
               <h1>{display.name}</h1>
             </div>
-            {postsView(posts, display)}
+            {postsView(posts)}
         </div>
       );
     }
