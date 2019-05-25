@@ -46,7 +46,6 @@ router.post('/create', (req, res) => {
                         new Data({
                             userID: user.id,
                             tags: null,
-                            posts: null,
                             following: null
                         }).save().then(() => {
                             res.redirect('http://localhost:3000/user/dashboard');

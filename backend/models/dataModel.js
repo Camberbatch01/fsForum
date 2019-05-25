@@ -6,25 +6,6 @@ const dataSchema = new Schema({
     tags: [{
         tag: String
     }],
-    posts: [{ 
-        post: {
-            postID: String,
-            author: String,
-            title: String,
-            tags: [{
-                tag: String
-            }],
-            date: Date,
-            content: String,
-            rating: Number,
-            comments: [{
-                author: String,
-                date: Date,
-                content: String,
-                rating: Number,
-            }]
-        }
-    }],
     following: {
         posts: [{
             postID: String,

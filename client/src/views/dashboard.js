@@ -19,21 +19,22 @@ class Dashboard extends React.Component {
     }));
   }
     render(){
+      console.log(this.state.Data)
       return (
         <div>
           <Header/>
           <Popup className="postForm" trigger={<button id="postCreate">Create Post?</button>} modal>
             <div id="popup">
-              <form id="postForm">
+              <form id="postForm" action="http://localhost:3001/user/dashboard/post" method="POST">
                 <h2>Your post</h2>
                 <input type="text" className="postInput" name="title" placeholder="Title" required/>
                 <input type="text" name="tags" className="postInput" placeholder="Tags" required/>
-                <textarea type="text" name="body" className="postInput" placeholder="Body" required/>
+                <textarea type="text" name="content" className="postInput" placeholder="Content" required/>
                 <button type="submit">Submit</button>
               </form>
             </div>
           </Popup>
-          {postsView(this.state.posts)}
+          {postsView(this.state.Data)}
         </div>
       );
     }

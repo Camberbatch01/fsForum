@@ -45,7 +45,6 @@ passport.use(new GoogleStrategy({
                 new Data({
                     userID: newUser.id,
                     tags: null,
-                    posts: null,
                     following: null
                 }).save().then(() => {
                     done(null, newUser);    
@@ -75,7 +74,6 @@ passport.use(new GithubStrategy({
                 new Data({
                     userID: newUser.id,
                     tags: null,
-                    posts: null,
                     following: null
                 }).save().then(() => {
                     done(null, newUser);    

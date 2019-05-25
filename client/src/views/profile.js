@@ -9,14 +9,14 @@ class Dashboard extends React.Component {
     super();
     this.state = {
       personalInfo: null,
-      detailInfo: null
+      postsInfo: null
     }
   }
   componentDidMount = () => {   //callback of setState run axios for userdata using userID, set data state and render page
     axios.get('http://localhost:3001/user/profile', {withCredentials: true})
     .then(res => this.setState({
       personalInfo: res.data.personal,
-      detailInfo: res.data.detail
+      postsInfo: res.data.posts
     }));
   }
     render(){
@@ -24,11 +24,11 @@ class Dashboard extends React.Component {
         let posts = [];
         let profImg = '/default-user.png';
 
-        if (this.state.personalInfo === null || this.state.detailInfo === null){
+        if (this.state.personalInfo === null || this.state.postsInfo === null){
             display = "Name Unavailable";
         } else {
             display = this.state.personalInfo;
-            posts = this.state.detailInfo.posts;
+            posts = this.state.postsInfo;
         }
         
         if (display.displayImage){
