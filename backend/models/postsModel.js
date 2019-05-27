@@ -10,7 +10,10 @@ const postsSchema = new Schema({
         }],
         date: Date,
         content: String,
-        rating: Number,
+        ratings: [{
+            user: String,
+            rating: Number
+        }],
         comments: [{
             author: String,
             date: Date,

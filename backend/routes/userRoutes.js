@@ -33,11 +33,30 @@ router.post('/dashboard/post', authCheck, (req, res) => {
             }],
             date: new Date(),
             content: req.body.body,
-            rating: 0,
+            ratings: [],
             comments: null
-        }).save().then(response => res.redirect('http://localhost:3000/user/dashboard'))
+        }).save().then(() => res.redirect('http://localhost:3000/user/dashboard'))
     })
 })
+
+router.post('/postRating', authCheck, (req, res) => {
+    const newRating = {user: req.user, rating: req.body.value}
+    PostDb.find({$and: [
+        {"_id": req.body.post},
+        {"ratings.user": req.user}
+    ]}).then(result => {
+        if (result.length === 0){
+            PostDb.findByIdAndUpdate(req.body.post, {$push: {ratings: newRating}})
+            .then(() => res.send('done'));
+        } else {
+            PostDb.findByIdAndUpdate(req.body.post,
+                {$set: {"ratings.$[elem].rating": req.body.value}},
+                {arrayFilters: [{"elem.user": req.user}]}
+            ).then(() => res.send('done'));
+        }
+    });
+});
+    
 
 router.get('/profile', authCheck, (req, res) => {
     const info = {};

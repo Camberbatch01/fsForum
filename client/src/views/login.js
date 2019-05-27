@@ -4,9 +4,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
-import { faJediOrder } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faJediOrder, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 
 library.add(faGithub);
 library.add(faGooglePlusG);

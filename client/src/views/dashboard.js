@@ -19,7 +19,6 @@ class Dashboard extends React.Component {
     }));
   }
     render(){
-      console.log(this.state.Data)
       return (
         <div>
           <Header/>

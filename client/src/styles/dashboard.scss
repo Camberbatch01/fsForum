@@ -32,13 +32,32 @@ body{
         padding: 5px;
         color: grey;
     }
-    #name{
+    #date{
         margin-left: auto;
     }
     #title{
         color: black;
         font-size: 1.5rem;
         font-weight: 600;
-        margin: auto;
+    }
+    #name{
+        margin: 0;
+        font-weight: 200;
+    }
+    #title-name{
+        text-align: left;
+        padding: 20px;
+    }
+    .ratingBtn{
+        background: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+        font-size: 2rem;
+    }
+    #rating{
+        padding: 0;
+        margin: 0;
+        font-size: 1.5rem;
     }
 }
