@@ -32,9 +32,9 @@ router.post('/dashboard/post', authCheck, (req, res) => {
                 tag: req.body.tags
             }],
             date: new Date(),
-            content: req.body.body,
+            content: req.body.content,
             ratings: [],
-            comments: null
+            comments: []
         }).save().then(() => res.redirect('http://localhost:3000/user/dashboard'))
     })
 })
@@ -57,6 +57,20 @@ router.post('/postRating', authCheck, (req, res) => {
     });
 });
     
+router.get('/posts/:postID', authCheck, (req, res) => {
+    PostDb.findById(req.params.postID).then(post => res.send(post))
+})
+
+router.post('/posts/:postID/comment', authCheck, (req, res) => {
+    const newComment = {
+        author: req.user,
+        date: new Date(),
+        content: req.body.comment,
+        rating: 0
+    }
+    PostDb.findByIdAndUpdate(req.params.postID, {$push: {comments: newComment}})
+    .then(() => res.redirect(`http://localhost:3000/user/posts/${req.params.postID}`))
+})
 
 router.get('/profile', authCheck, (req, res) => {
     const info = {};

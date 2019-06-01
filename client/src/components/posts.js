@@ -13,7 +13,6 @@ const postDayTime = (postDate, dateNow) => {
     const ans = Math.floor((utcD2 - utcD1) / msPerDay);
 
     if (ans === 0) {
-        console.log(dateNow.getUTCHours())
         if (postDate.getUTCHours() < dateNow.getUTCHours()){    //if hours greater but minutes not then not truly an hour
             if (postDate.getUTCMinutes() <= dateNow.getUTCMinutes()){    //eg. 12:50, 13:10
                 return `${dateNow.getUTCHours() - postDate.getUTCHours()}hr ago`;
@@ -42,7 +41,6 @@ const postsView = (posts) => {
     } else {
         return posts.map(post => {
             const date = new Date(post.date);
-            console.log(`yo ${postDayTime(date, new Date())}`)
             let rating = 0;
             if (post.ratings){
                 rating = (post.ratings).reduce((total, current) => total + current.rating , 0);
