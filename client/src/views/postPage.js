@@ -4,10 +4,12 @@ import Header from '../components/header';
 import {withRouter} from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown, faTags} from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faArrowDown, faTags, faClock} from '@fortawesome/free-solid-svg-icons';
 import Popup from 'reactjs-popup';
+import postDayTime from '../components/time';
+import '../styles/post.scss';
 
-library.add(faArrowUp, faArrowDown, faTags);
+library.add(faArrowUp, faArrowDown, faTags, faClock);
 
 class PostPage extends React.Component{
     constructor(){
@@ -27,13 +29,13 @@ class PostPage extends React.Component{
     }
 
     render(){
-        //const noPost = <h1>Post could not be found, does not exist</h1>;
         const data = this.state.post;
         const rating = data.ratings ? (data.ratings).reduce((total, current) => total + current.rating , 0) : 0
         const post = (data) => {
             if (!data._id){
                 return <h1>Post could not be found, does not exist</h1>
             } else {
+                const date = new Date(data.date)
                 return (
                 <div>
                     <div id="postContainer">
@@ -44,19 +46,30 @@ class PostPage extends React.Component{
                         </div>
                         <h1>{data.title}</h1>
                         <p>by {data.authorName}</p>
+                        <p><FontAwesomeIcon icon={faClock}/> {postDayTime(date, new Date())}</p>
                         <p id="tags"><FontAwesomeIcon icon={faTags}/>{data.tags ? data.tags[0].tag : 'Unavailable'}</p>
                         <p>{data.content}</p>
                     </div>
                     <div id="commentsContainer">
+                        <h1>Comments</h1>
                         {!data.comments ?
                             <h1>No comments</h1> : 
                             data.comments.map(comment => {
+                                const commentDate = new Date(comment.date);
                                 return (
-                                    <div>
-                                        <p>{comment.rating ? comment.rating : 0}</p>
-                                        <p>{comment.author}</p>
-                                        <p>{comment.date}</p>
-                                        <p>{comment.content}</p>
+                                    <div className="comment">
+                                        <div>
+                                            <button><FontAwesomeIcon icon={faArrowUp}/></button>
+                                            <p>{comment.rating ? comment.rating : 0}</p> 
+                                            <button><FontAwesomeIcon icon={faArrowDown}/></button>
+                                        </div>
+                                        <div className="commentContent">
+                                            <div>
+                                                <p>{comment.author}</p>
+                                                <p className="clock"><FontAwesomeIcon icon={faClock}/> {postDayTime(commentDate, new Date())}</p>
+                                            </div>
+                                            <p className="reply">{comment.content}</p>
+                                        </div>
                                     </div>
                                 )
                             })

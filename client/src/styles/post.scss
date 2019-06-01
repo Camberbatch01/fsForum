@@ -1,0 +1,29 @@
+#postContainer{
+    display: flex;
+    justify-content: center;
+}
+#commentsContainer{
+    background: lightgrey;
+    padding: 5px;
+    .comment {
+        max-width: 960px;
+        margin: auto;
+        background: white;
+        box-shadow: 1px 1px 1px 1px lightgrey;
+        display: flex;
+        .commentContent{
+            width: 100%;
+            padding: 0 20px;
+            div{
+                display: flex;
+                width: 100%;
+                .clock{
+                    margin-left: auto;
+                }
+            }
+            .reply{
+                text-align: left;
+            }
+        }
+    }
+}
